@@ -11,21 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
-
       - name: Copy files from smartchat to insta
         run: |
-          mkdir -p smartchat/insta
-          cp -r smartchat/* smartchat/insta/
+          mkdir -p insta
+          cp -r smartchat/* insta/
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add smartchat/insta
+          git add insta
           git commit -m "Automated copy of files from smartchat to insta"
           git push
         env:
