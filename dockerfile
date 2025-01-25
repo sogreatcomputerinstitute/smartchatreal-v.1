@@ -2,7 +2,7 @@
 FROM php:7.4-apache
 
 # Copy your PHP application files to the /var/www/html directory in the container
-COPY ./insta /var/www/html
+COPY ./smartchat /var/www/html
 
 # Set the working directory inside the container
 WORKDIR /var/www/html
