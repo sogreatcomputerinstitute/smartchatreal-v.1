@@ -35,8 +35,5 @@ RUN cat <<EOT > /etc/apache2/sites-available/000-default.conf
 </VirtualHost>
 EOT
 
-# Restart Apache to ensure configurations are loaded
-RUN service apache2 restart
-
 # Start the Apache server
 CMD ["apache2-foreground"]
