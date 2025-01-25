@@ -20,17 +20,19 @@ RUN chmod -R 755 /var/www/smartchat
 # Enable the rewrite module (if needed)
 RUN a2enmod rewrite
 
-# Create the Apache configuration file in steps to avoid echo issues
-RUN printf '<VirtualHost *:80>\n' > /etc/apache2/sites-available/000-default.conf
-RUN printf 'DocumentRoot /var/www/smartchat\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf '<Directory /var/www/smartchat>\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf 'Options Indexes FollowSymLinks\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf 'AllowOverride All\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf 'Require all granted\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf '</Directory>\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf 'ErrorLog ${APACHE_LOG_DIR}/error.log\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf 'CustomLog ${APACHE_LOG_DIR}/access.log combined\n' >> /etc/apache2/sites-available/000-default.conf
-RUN printf '</VirtualHost>\n' >> /etc/apache2/sites-available/000-default.conf
+# Create the Apache configuration file using a here-document
+RUN cat <<EOT > /etc/apache2/sites-available/000-default.conf
+<VirtualHost *:80>
+    DocumentRoot /var/www/smartchat
+    <Directory /var/www/smartchat>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+EOT
 
 # Start the Apache server
 CMD ["apache2-foreground"]
