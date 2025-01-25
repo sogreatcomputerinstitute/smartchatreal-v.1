@@ -17,11 +17,11 @@ jobs:
           cp -r smartchat/* insta/
 
       - name: Commit and push changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add insta
           git commit -m "Automated copy of files from smartchat to insta"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push https://$GH_PAT@github.com/sogreatcomputerinstitute/smartchatreal-v.1.git
