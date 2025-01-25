@@ -1,0 +1,23 @@
+name: Copy Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  copy_files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy files
+        run: |
+          mkdir -p smartchat/insta
+          cp -r smartchat/* smartchat/insta/
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add smartchat/insta
+          git commit -m "Copied files from smartchat to insta"
+          git push
