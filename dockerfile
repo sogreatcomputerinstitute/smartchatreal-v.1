@@ -23,8 +23,8 @@ RUN a2enmod rewrite
 # Create the Apache configuration file using a here-document
 RUN cat <<EOT > /etc/apache2/sites-available/000-default.conf
 <VirtualHost *:80>
-    DocumentRoot /var/www/smartchat/insta
-    <Directory /var/www/smartchat/insta>
+    DocumentRoot /var/www/smartchat
+    <Directory /var/www/smartchat>
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
